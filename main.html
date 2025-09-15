@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" class="light"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louise Catrina | Virtual Assistant</title>
+    <link rel="icon" type="image/x-icon" href="pic2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root.light {
+            --background-color: #f4f1ee;
+            --text-color: #5c5c5c;
+            --heading-color: #3a3a3a;
+            --accent-color: #c5a992;
+            --card-bg-color: #ffffff;
+            --border-color: #e0dcd7;
+            --header-bg-color: rgba(244, 241, 238, 0.85);
+            --section-highlight-bg: #ede9e4;
+        }
+
+        :root.dark {
+            --background-color: #1a1818;
+            --text-color: #a0a0a0;
+            --heading-color: #e0e0e0;
+            --accent-color: #c5a992;
+            --card-bg-color: #242222;
+            --border-color: #3a3a3a;
+            --header-bg-color: rgba(26, 24, 24, 0.85);
+            --section-highlight-bg: #211f1f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--background-color); 
+            color: var(--text-color); 
+            line-height: 1.7; 
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden; /* --- THIS IS THE FIX --- */
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 6rem 0; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        section.visible { opacity: 1; transform: translateY(0); }
+        h1, h2, h3, h4 { color: var(--heading-color); font-family: 'Cormorant Garamond', serif; font-weight: 700; transition: color 0.4s ease; }
+        h2 { font-size: 3rem; text-align: center; margin-bottom: 3rem; position: relative; font-weight: 600; }
+        a { color: var(--heading-color); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        a:hover { color: var(--accent-color); }
+        
+        .header { position: fixed; top: 0; width: 100%; z-index: 1000; background: var(--header-bg-color); backdrop-filter: blur(10px); padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); transition: background-color 0.4s ease, border-color 0.4s ease; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--heading-color); letter-spacing: 1px; }
+        .nav-items { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 1.5rem; }
+        .nav-links a { color: var(--text-color); font-weight: 500; transition: color 0.3s ease; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--heading-color); }
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; color: var(--heading-color); z-index: 1002; }
+
+        .theme-toggle { cursor: pointer; font-size: 1.2rem; color: var(--heading-color); z-index: 1002; }
+        #theme-toggle-dark-icon { display: none; }
+        html.dark #theme-toggle-dark-icon { display: block; }
+        html.dark #theme-toggle-light-icon { display: none; }
+
+        #hero { min-height: 100vh; display: flex; align-items: center; }
+        .hero-container { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 4rem; }
+        .hero-text { text-align: left; }
+        .hero-text p.intro { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--accent-color); margin-bottom: 1rem; }
+        .hero-text h1 { font-family: var(--font-serif); font-size: 4.5rem; line-height: 1.1; margin: 0; }
+        .hero-text p.subtitle { font-size: 1.2rem; font-weight: 400; color: var(--text-color); margin: 1.5rem 0; min-height: 100px; }
+        .hero-socials { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .hero-socials p { font-weight: 500; margin: 0; color: var(--heading-color); }
+        .hero-socials a img { transition: transform 0.3s ease; border-radius: 50%; }
+        .hero-socials a:hover img { transform: scale(1.1); }
+        .hero-buttons { display: flex; gap: 1rem; }
+        .btn { display: inline-block; background: var(--heading-color); color: var(--background-color); padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 500; transition: all 0.3s ease; border: 2px solid var(--heading-color); letter-spacing: 0.5px; }
+        .btn:hover { background: transparent; color: var(--heading-color); transform: translateY(-3px); }
+        .btn-secondary { background: transparent; color: var(--heading-color); }
+        .btn-secondary:hover { background: var(--heading-color); color: var(--background-color); }
+        .hero-image { text-align: center; }
+        .hero-image img { width: 350px; height: 350px; border-radius: 50%; object-fit: cover; }
+        
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .grid-item { background: var(--card-bg-color); padding: 2rem; border-radius: 4px; border: 1px solid var(--border-color); transition: background-color 0.4s ease, border-color 0.4s ease; }
+        .grid-item h3 { font-size: 1.5rem; color: var(--heading-color); margin-bottom: 0.5rem; }
+        .grid-item p { margin-bottom: 0.25rem; font-size: 1rem; }
+        .grid-item .date { font-size: 0.9em; font-style: italic; color: var(--accent-color); margin-bottom: 1rem; }
+
+        .about-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center; }
+        .about-image img { width: 100%; border-radius: 4px; }
+        .about-text h3 { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--heading-color); font-weight: 600; }
+        
+        .skills-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+        .skill-item { background: transparent; color: var(--text-color); padding: 0.7rem 1.5rem; border-radius: 50px; font-size: 1rem; border: 1px solid var(--border-color); transition: all 0.4s ease; }
+        
+        #works { background-color: var(--section-highlight-bg); transition: background-color 0.4s ease; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card { background: var(--card-bg-color); border-radius: 4px; overflow: hidden; transition: all 0.4s ease; border: 1px solid var(--border-color); }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .project-card img { width: 100%; height: 250px; object-fit: cover; transition: transform 0.4s ease; }
+        .project-card:hover img { transform: scale(1.05); }
+        .project-info { padding: 1.5rem; text-align: center; }
+        .project-info h3 { font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600; }
+        .project-info .btn-secondary { margin-top: 1rem; padding: 0.6rem 1.5rem; font-size: 0.9rem; }
+        .category-title { font-size: 2rem; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .category-description { text-align: center; font-size: 1.1rem; max-width: 700px; margin: 0 auto 3rem auto; }
+
+        .contact-form { max-width: 600px; margin: 0 auto; text-align: center; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--card-bg-color); color: var(--text-color); font-family: var(--font-sans); font-size: 1rem; transition: all 0.4s ease; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--heading-color); }
+        textarea { resize: vertical; min-height: 150px; }
+        
+        .footer { background: var(--section-highlight-bg); text-align: center; padding: 4rem 0; transition: background-color 0.4s ease; }
+        .social-links a { font-size: 1.5rem; margin: 0 1rem; color: var(--text-color); transition: color 0.3s ease; }
+        .social-links a:hover { color: var(--heading-color); }
+        .footer p { margin-top: 1.5rem; font-size: 0.9rem; }
+        
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 992px) {
+            .hero-container, .about-content, .grid-layout { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+            }
+            .hero-image { grid-row: 1; margin-bottom: 2rem; }
+            .hero-text, .about-text { text-align: center; }
+            .hero-socials, .hero-buttons { justify-content: center; }
+            .hero-text h1 { font-size: 3.5rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 1.5rem; }
+            section { padding: 4rem 0; }
+            h2 { font-size: 2.2rem; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-text p.subtitle { min-height: 0; }
+            .hero-image img { width: 280px; height: 280px; }
+
+            .nav-links { 
+                position: fixed; 
+                top: 0; 
+                right: -100%; 
+                width: 75%; 
+                max-width: 320px;
+                height: 100vh; 
+                background: var(--background-color); 
+                flex-direction: column; 
+                justify-content: center; 
+                align-items: center; 
+                transition: right 0.5s ease-in-out; 
+                border-left: 1px solid var(--border-color);
+            }
+            .nav-items.active .nav-links { right: 0; }
+            .nav-links li { margin: 1.5rem 0; }
+            .nav-links a { font-size: 1.2rem; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body class="light">
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#hero" class="logo">Louise</a>
+            <div class="nav-items">
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#education" class="nav-link">Education</a></li>
+                    <li><a href="#experience" class="nav-link">Experience</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#tools" class="nav-link">Tools</a></li>
+                    <li><a href="#works" class="nav-link">Works</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon" id="theme-toggle-dark-icon"></i>
+                    <i class="fas fa-sun" id="theme-toggle-light-icon"></i>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container hero-container">
+                <div class="hero-text">
+                    <p class="intro">Hi, I am</p>
+                    <h1>Louise Catrina Palattao</h1>
+                    <p class="subtitle" id="typing-effect"></p>
+                    <div class="hero-socials">
+                        <p>Follow me on:</p>
+                        <a href="https://www.linkedin.com/in/louise-catrina-palattao-chra-0b7b1a197/" target="_blank"><img src="lilogo.png" alt="LinkedIn Profile" style="width: 30px; height: 30px;"></a>
+                        <a href="https://www.onlinejobs.ph/jobseekers/info/3171159" target="_blank"><img src="ojlogo1.png" alt="OnlineJobs.ph Profile" style="width: 30px; height: 30px;"></a>
+                        <a href="https://www.upwork.com/freelancers/~0183ed15dce6827e0a" target="_blank"><img src="gemcon.png" alt="Upwork Profile" style="width: 30px; height: 30px;"></a>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn">Book a Call</a>
+                        <a href="Resume.html" class="btn btn-secondary">My Resume</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="pic1.jpg" alt="Louise Catrina">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="pic1.jpg" alt="Catrina">
+                </div>
+                <div class="about-text">
+                    <h3>Creative & Driven Specialist.</h3>
+                    <p>I'm a passionate specialist with a knack for creating clean, elegant, and efficient pipelines. With a strong foundation in lead generation, I love turning complex problems into beautiful, intuitive digital experiences.</p>
+                    <p>When I'm not working, you can find me exploring the latest tech trends, contributing to open-source projects, or enjoying a good cup of coffee.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="container">
+            <h2>Education Attainment</h2>
+            <div class="grid-layout">
+                <div class="grid-item">
+                    <h3>Humanities & Social Science Strand</h3>
+                    <p>School of Our Lady of Atocha</p>
+                    <p class="date">2019 – 2021</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Bachelor of Science in Psychology</h3>
+                    <p>Isabela State University</p>
+                    <p class="date">2021 - 2025</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experience" class="container">
+            <h2>Work Experience</h2>
+            <div class="grid-layout">
+                <div class="grid-item">
+                    <h3>Social Media Assistant</h3>
+                    <p>Journey Through Meditation</p>
+                    <p class="date">2025 – PRESENT</p>
+                    <p>I managed the social media strategy across Instagram, LinkedIn, and Facebook, significantly growing followers and engagement within the wellness niche. By writing and publishing compelling blog content on Squarespace and building an online community, I successfully increased site traffic and enhanced the brand's overall visibility and credibility.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Lead Generation Specialist</h3>
+                    <p>Independent Contractor – Graham Meglino</p>
+                    <p class="date">2024 – 2025</p>
+                    <p>I spearheaded lead generation by researching prospects on LinkedIn, Instagram, and Google and implementing outreach campaigns that improved response rates by 30%. This process consistently generated qualified leads and supported their conversion into clients through strategic messaging and follow-up.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Virtual Assistant – Amazon KDP & Audible</h3>
+                    <p>Books by Cooper</p>
+                    <p class="date">2024 – 2025</p>
+                    <p>I managed author accounts on Amazon KDP and Audible, where I streamlined content distribution and ensured compliance with publishing standards. Through promotional strategies like coordinating review exchanges and distributing promo codes, I successfully increased book visibility by 25% and improved overall workflow efficiency.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Client Relations & Instagram Lead Generation Specialist</h3>
+                    <p>Medspa Majesty</p>
+                    <p class="date">2023 - 2024</p>
+                    <p>I executed a high-volume outreach strategy by engaging 100+ daily prospects on Instagram, nurturing lead relationships to drive higher client retention. Additionally, I recommended website optimization strategies that directly improved booking conversions, contributing to both lead generation and conversion efficiency.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h2>Skills & Expertise</h2>
+            <div class="skills-list">
+                <span class="skill-item">Lead Generation (Instagram, LinkedIn, Google)</span>
+                <span class="skill-item">Social Media Management (IG, FB, LinkedIn)</span>
+                <span class="skill-item">Amazon KDP & Audible Publishing</span>
+                <span class="skill-item">Client Relations & Retention</span>
+                <span class="skill-item">Squarespace Blogging & Content Creation</span>
+                <span class="skill-item">CRM Tools & Outreach Strategy</span>
+            </div>
+        </section>
+        
+        <section id="tools" class="container">
+            <h2>Tools & Systems</h2>
+            <div class="skills-list">
+                <span class="skill-item">notion</span>
+                <span class="skill-item">canva</span>
+                <span class="skill-item">microsoft office</span>
+                <span class="skill-item">squarespace</span>
+                <span class="skill-item">Google</span>
+                <span class="skill-item">LinkedIn</span>
+                <span class="skill-item">IG</span>
+                <span class="skill-item">Slack</span>
+                <span class="skill-item">Trello</span>
+                <span class="skill-item">Google Workspace</span>
+            </div>
+        </section>
+
+        <section id="works" class="container">
+            <h2>Sample Works</h2>
+            <!-- Canva Design Support--> 
+            <h3 class="category-title">Canva Design Support</h3>
+            <h4 class="category-description">Edited and designed a variety of digital assets including ebooks, social media posts, and infographics based on client guidelines. 
+                Delivered consistent, branded visuals that supported client marketing campaigns and improved content presentation.</h4>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="canva1.png" alt="Project 1">
+                    <div class="project-info">
+                        <h3>Construction Busy Book</h3>
+                        <a href="canva1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="canva2.png" alt="Project 2">
+                    <div class="project-info">
+                        <h3>INFOGRAPHIC</h3>
+                        <a href="canva2.png" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="canva3.jpeg" alt="Project 3">
+                    <div class="project-info">
+                        <h3>POST</h3>
+                        <a href="POST.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <h2></h2>
+            
+            
+            <!-- Lead Generation & Outreach -->
+            <h3 class="category-title">Lead Generation & Outreach</h3>
+            <h4 class="category-description">Researched and built targeted lead lists across LinkedIn, Instagram, and Google for clients in coaching, speaking, and nutrition industries. Implemented structured outreach campaigns that increased response rates by 30%, resulting in a steady flow of qualified prospects.</h4>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="VA1.png" alt="Project 1">
+                    <div class="project-info">
+                        <h3>Excel Sheet</h3>
+                        <a href="VA1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="VA.png" alt="Project 2">
+                    <div class="project-info">
+                        <h3>Excel Sheet</h3>
+                        <a href="VA.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2></h2>
+            
+            
+            <!-- Social Media Engagement -->
+            <h3 class="category-title">Social Media Engagement</h3>
+            <h4 class="category-description">Boosted client visibility by engaging with aligned audiences through daily comments, DMs, and interactions. Built and nurtured online communities, enhancing brand credibility and awareness.</h4>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="socmed1.png" alt="Project 1">
+                    <div class="project-info">
+                        <h3>Social Media Engagement</h3>
+                        <a href="socmed1.png" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="socmed2.png" alt="Project 2">
+                    <div class="project-info">
+                        <h3>Social Media Engagement</h3>
+                        <a href="socmed2.png" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="socmed3.PNG" alt="Project 3">
+                    <div class="project-info">
+                        <h3>Social Media Engagement</h3>
+                        <a href="socmed3.PNG" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+            </div>
+
+            <h2></h2>
+            
+            
+            <!-- Amazon & Audible Publishing Support -->
+            <h3 class="category-title">Amazon & Audible Publishing Support</h3>
+            <h4 class="category-description">Managed author accounts on Amazon KDP and Audible, ensuring all listings were compliant with publishing standards. 
+                Coordinated review exchanges and distributed promotional codes, increasing book visibility and sales traction by 25%.
+                Streamlined publishing workflows, allowing authors to focus on content creation while I handled backend support.
+            </h4>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="Aud1.PNG" alt="Project 1">
+                    <div class="project-info">
+                        <h3>Amazon & Audible Publishing Support</h3>
+                        <a href="Aud1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="Aud2.PNG" alt="Project 2">
+                    <div class="project-info">
+                        <h3>Amazon & Audible Publishing Support</h3>
+                        <a href="Aud2.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="Aud3.PNG" alt="Project 3">
+                    <div class="project-info">
+                        <h3>Amazon & Audible Publishing Support</h3>
+                        <a href="Aud3.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+            </div>
+            <h2></h2>
+
+            <!-- Content & Blog Management -->
+            <h3 class="category-title">Content & Blog Management</h3>
+            <h4 class="category-description">Published blog content on Squarespace, leading to a measurable increase in site traffic and audience engagement.</h4>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="blog.png" alt="Project 1" width="1100px" height="10px">
+                    <div class="project-info">
+                        <h3>Amazon & Audible Publishing Support</h3>
+                        <a href="BlogWorks.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                    </div>
+                </div>
+                
+            </div>
+
+        <section id="contact" class="container">
+            <h2>Get In Touch</h2>
+            <p class="category-description" style="max-width: 500px; margin-bottom: 2rem;">Have a project in mind or want to learn more? Let's connect.</p>
+            <form id="contact-form" class="contact-form" name="submit-to-google-sheet">
+                <div class="form-group">
+                    <input type="text" id="name" name="Name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="Email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="Message" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="mailto:louise.catrina.palattao@gmail.com"><p>Send an Email here</p><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p>&copy; 2025 Louise Catrina. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navItems = document.querySelector('.nav-items'); // Grab the container
+
+        hamburger.addEventListener('click', () => {
+            navItems.classList.toggle('active'); // Toggle on the container
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if(navItems.classList.contains('active')) {
+                    navItems.classList.remove('active');
+                }
+            });
+        });
+
+        // --- DARK MODE TOGGLE ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlEl = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlEl.classList.add('dark');
+        } else {
+            htmlEl.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            if (htmlEl.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- TYPING EFFECT ---
+        const typingText = "Virtual Assistant, Lead Generation Specialist, and Social Media Manager with 3+ years of experience supporting entrepreneurs, authors, and growing brands. Proven ability to combine client relations, digital marketing strategies, and publishing support to deliver measurable business outcomes.";
+        const typingElement = document.getElementById('typing-effect');
+        let i = 0;
+        function typeWriter() {
+            if (typingElement && i < typingText.length) {
+                typingElement.innerHTML += typingText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 15);
+            }
+        }
+        if (typingElement) {
+            typeWriter();
+        }
+
+        // --- FADE-IN SECTIONS ON SCROLL ---
+        const sections = document.querySelectorAll('section');
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        sections.forEach(section => { observer.observe(section); });
+
+        // --- ACTIVE NAV LINK ON SCROLL ---
+        const navLinkElements = document.querySelectorAll('.nav-link');
+        const sectionElements = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = 'hero'; // Default to hero
+            sectionElements.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 80) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinkElements.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // --- CONTACT FORM SUBMISSION ---
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzG_YGMGlPxgwUke8NIkEvbSfVGS_CRem9uM_O8WWV0HoLn-6xFitjbUtPlK9rkpNtx/exec'; 
+        const form = document.forms['submit-to-google-sheet'];
+
+        if(form) {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const submitButton = form.querySelector('button');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                    .then(response => {
+                        console.log('Success!', response);
+                        alert('Thank you for your message! I will get back to you soon.');
+                        form.reset();
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Message';
+                    })
+                    .catch(error => {
+                        console.error('Error!', error.message);
+                        alert('Sorry, there was an error sending your message. Please try again.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Message';
+                    });
+            });
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+const sheetName = 'Sheet1';
+const scriptProp = PropertiesService.getScriptProperties();
+
+function initialSetup() {
+  const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  scriptProp.setProperty('key', activeSpreadsheet.getId());
+  console.log('Setup completed with sheet ID:', activeSpreadsheet.getId());
+}
+
+function doGet(e) {
+  console.log('GET request received');
+  return ContentService.createTextOutput('Script is working! POST requests should go to doPost function.');
+}
+
+function doPost(e) {
+  console.log('=== doPost function called ===');
+  console.log('Event object:', JSON.stringify(e));
+  console.log('Parameters received:', JSON.stringify(e.parameter));
+  
+  const lock = LockService.getScriptLock();
+  
+  try {
+    lock.waitLock(10000);
+    console.log('Lock acquired');
+    
+    // Get the sheet
+    const sheetId = scriptProp.getProperty('key');
+    console.log('Sheet ID from properties:', sheetId);
+    
+    if (!sheetId) {
+      throw new Error('Sheet ID not found. Run initialSetup first.');
+    }
+    
+    const doc = SpreadsheetApp.openById(sheetId);
+    const sheet = doc.getSheetByName(sheetName);
+    console.log('Sheet found:', sheet.getName());
+
+    // Get headers
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues();
+    console.log('Headers found:', headers);
+    
+    const nextRow = sheet.getLastRow() + 1;
+    console.log('Next row to write:', nextRow);
+
+    // Create new row data
+    const newRow = headers.map(function(header) {
+      if (header === 'Timestamp') {
+        return new Date();
+      }
+      const value = e.parameter[header] || '';
+      console.log(`Mapping ${header}: ${value}`);
+      return value;
+    });
+    
+    console.log('New row data:', newRow);
+
+    // Write to sheet
+    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow]);
+    console.log('Data written successfully');
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ 
+        'result': 'success', 
+        'row': nextRow,
+        'data': newRow 
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    console.error('Error in doPost:', error.toString());
+    console.error('Error stack:', error.stack);
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({ 
+        'result': 'error', 
+        'error': error.toString(),
+        'message': 'Check the Apps Script logs for details'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } finally {
+    lock.releaseLock();
+    console.log('Lock released');
+  }
+}
+
+// Test function to manually verify everything works
+function testFunction() {
+  console.log('=== Manual Test ===');
+  
+  const testData = {
+    parameter: {
+      'Name': 'Test User',
+      'Email': 'test@example.com', 
+      'Message': 'This is a test message'
+    }
+  };
+  
+  const result = doPost(testData);
+  console.log('Test result:', result.getContent());
+}
