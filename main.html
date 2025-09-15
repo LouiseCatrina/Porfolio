@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light"> 
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
             color: var(--text-color); 
             line-height: 1.7; 
             transition: background-color 0.4s ease, color 0.4s ease;
-            overflow-x: hidden; /* --- THIS IS THE FIX --- */
+            overflow-x: hidden;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
         section { padding: 6rem 0; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
@@ -74,7 +74,7 @@
         .hero-text p.subtitle { font-size: 1.2rem; font-weight: 400; color: var(--text-color); margin: 1.5rem 0; min-height: 100px; }
         .hero-socials { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
         .hero-socials p { font-weight: 500; margin: 0; color: var(--heading-color); }
-        .hero-socials a img { transition: transform 0.3s ease; border-radius: 50%; }
+        .hero-socials a img { width: 30px; height: 30px; border-radius: 50%; transition: transform 0.3s ease; }
         .hero-socials a:hover img { transform: scale(1.1); }
         .hero-buttons { display: flex; gap: 1rem; }
         .btn { display: inline-block; background: var(--heading-color); color: var(--background-color); padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 500; transition: all 0.3s ease; border: 2px solid var(--heading-color); letter-spacing: 0.5px; }
@@ -108,6 +108,11 @@
         .project-info .btn-secondary { margin-top: 1rem; padding: 0.6rem 1.5rem; font-size: 0.9rem; }
         .category-title { font-size: 2rem; text-align: center; font-weight: 600; margin-bottom: 1rem; }
         .category-description { text-align: center; font-size: 1.1rem; max-width: 700px; margin: 0 auto 3rem auto; }
+
+        /* OPTIMIZATION: This single rule replaces the empty <h2> tags for spacing */
+        .projects-grid + .category-title {
+            margin-top: 4rem;
+        }
 
         .contact-form { max-width: 600px; margin: 0 auto; text-align: center; }
         .form-group { margin-bottom: 1.5rem; }
@@ -196,9 +201,9 @@
                     <p class="subtitle" id="typing-effect"></p>
                     <div class="hero-socials">
                         <p>Follow me on:</p>
-                        <a href="https://www.linkedin.com/in/louise-catrina-palattao-chra-0b7b1a197/" target="_blank"><img src="lilogo.png" alt="LinkedIn Profile" style="width: 30px; height: 30px;"></a>
-                        <a href="https://www.onlinejobs.ph/jobseekers/info/3171159" target="_blank"><img src="ojlogo1.png" alt="OnlineJobs.ph Profile" style="width: 30px; height: 30px;"></a>
-                        <a href="https://www.upwork.com/freelancers/~0183ed15dce6827e0a" target="_blank"><img src="gemcon.png" alt="Upwork Profile" style="width: 30px; height: 30px;"></a>
+                        <a href="https://www.linkedin.com/in/louise-catrina-palattao-chra-0b7b1a197/" target="_blank" rel="noopener noreferrer"><img src="lilogo.png" alt="LinkedIn Profile" loading="lazy" decoding="async"></a>
+                        <a href="https://www.onlinejobs.ph/jobseekers/info/3171159" target="_blank" rel="noopener noreferrer"><img src="ojlogo1.png" alt="OnlineJobs.ph Profile" loading="lazy" decoding="async"></a>
+                        <a href="https://www.upwork.com/freelancers/~0183ed15dce6827e0a" target="_blank" rel="noopener noreferrer"><img src="gemcon.png" alt="Upwork Profile" loading="lazy" decoding="async"></a>
                     </div>
                     <div class="hero-buttons">
                         <a href="#contact" class="btn">Book a Call</a>
@@ -206,7 +211,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="pic1.jpg" alt="Louise Catrina">
+                    <img src="pic1.jpg" alt="Louise Catrina" loading="lazy" decoding="async">
                 </div>
             </div>
         </section>
@@ -214,7 +219,7 @@
         <section id="about" class="container">
             <div class="about-content">
                 <div class="about-image">
-                    <img src="pic1.jpg" alt="Catrina">
+                    <img src="pic1.jpg" alt="Catrina" loading="lazy" decoding="async">
                 </div>
                 <div class="about-text">
                     <h3>Creative & Driven Specialist.</h3>
@@ -300,140 +305,116 @@
 
         <section id="works" class="container">
             <h2>Sample Works</h2>
-            <!-- Canva Design Support--> 
+            
             <h3 class="category-title">Canva Design Support</h3>
-            <h4 class="category-description">Edited and designed a variety of digital assets including ebooks, social media posts, and infographics based on client guidelines. 
-                Delivered consistent, branded visuals that supported client marketing campaigns and improved content presentation.</h4>
-
+            <h4 class="category-description">Edited and designed a variety of digital assets including ebooks, social media posts, and infographics based on client guidelines. Delivered consistent, branded visuals that supported client marketing campaigns and improved content presentation.</h4>
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="canva1.png" alt="Project 1">
+                    <img src="canva1.png" alt="Construction busy book sample" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Construction Busy Book</h3>
-                        <a href="canva1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="canva1.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="canva2.png" alt="Project 2">
+                    <img src="canva2.png" alt="Infographic sample" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>INFOGRAPHIC</h3>
-                        <a href="canva2.png" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="canva2.png" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="canva3.jpeg" alt="Project 3">
+                    <img src="canva3.jpeg" alt="Social media post sample" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>POST</h3>
-                        <a href="POST.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="POST.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
-                </div>
             </div>
-
-            <h2></h2>
             
-            
-            <!-- Lead Generation & Outreach -->
             <h3 class="category-title">Lead Generation & Outreach</h3>
             <h4 class="category-description">Researched and built targeted lead lists across LinkedIn, Instagram, and Google for clients in coaching, speaking, and nutrition industries. Implemented structured outreach campaigns that increased response rates by 30%, resulting in a steady flow of qualified prospects.</h4>
-
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="VA1.png" alt="Project 1">
+                    <img src="VA1.png" alt="Excel sheet for lead generation" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Excel Sheet</h3>
-                        <a href="VA1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="VA1.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="VA.png" alt="Project 2">
+                    <img src="VA.png" alt="Another excel sheet for lead generation" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Excel Sheet</h3>
-                        <a href="VA.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="VA.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
             </div>
 
-            <h2></h2>
-            
-            
-            <!-- Social Media Engagement -->
             <h3 class="category-title">Social Media Engagement</h3>
             <h4 class="category-description">Boosted client visibility by engaging with aligned audiences through daily comments, DMs, and interactions. Built and nurtured online communities, enhancing brand credibility and awareness.</h4>
-
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="socmed1.png" alt="Project 1">
+                    <img src="socmed1.png" alt="Screenshot of social media engagement" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Social Media Engagement</h3>
-                        <a href="socmed1.png" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="socmed1.png" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="socmed2.png" alt="Project 2">
+                    <img src="socmed2.png" alt="Screenshot of social media comments" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Social Media Engagement</h3>
-                        <a href="socmed2.png" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="socmed2.png" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="socmed3.PNG" alt="Project 3">
+                    <img src="socmed3.PNG" alt="Screenshot of direct message engagement" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Social Media Engagement</h3>
-                        <a href="socmed3.PNG" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="socmed3.PNG" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
             </div>
 
-            <h2></h2>
-            
-            
-            <!-- Amazon & Audible Publishing Support -->
             <h3 class="category-title">Amazon & Audible Publishing Support</h3>
-            <h4 class="category-description">Managed author accounts on Amazon KDP and Audible, ensuring all listings were compliant with publishing standards. 
-                Coordinated review exchanges and distributed promotional codes, increasing book visibility and sales traction by 25%.
-                Streamlined publishing workflows, allowing authors to focus on content creation while I handled backend support.
-            </h4>
-
+            <h4 class="category-description">Managed author accounts on Amazon KDP and Audible, ensuring all listings were compliant. Coordinated review exchanges and distributed promotional codes, increasing book visibility and sales traction by 25%. Streamlined publishing workflows for authors.</h4>
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="Aud1.PNG" alt="Project 1">
+                    <img src="Aud1.PNG" alt="Audible account management screenshot" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Amazon & Audible Publishing Support</h3>
-                        <a href="Aud1.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="Aud1.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="Aud2.PNG" alt="Project 2">
+                    <img src="Aud2.PNG" alt="Amazon KDP dashboard screenshot" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Amazon & Audible Publishing Support</h3>
-                        <a href="Aud2.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="Aud2.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="Aud3.PNG" alt="Project 3">
+                    <img src="Aud3.PNG" alt="Promo code distribution screenshot" loading="lazy" decoding="async">
                     <div class="project-info">
                         <h3>Amazon & Audible Publishing Support</h3>
-                        <a href="Aud3.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <a href="Aud3.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
             </div>
-            <h2></h2>
 
-            <!-- Content & Blog Management -->
             <h3 class="category-title">Content & Blog Management</h3>
             <h4 class="category-description">Published blog content on Squarespace, leading to a measurable increase in site traffic and audience engagement.</h4>
-
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="blog.png" alt="Project 1" width="1100px" height="10px">
+                    <img src="blog.png" alt="Blog management on Squarespace" width="1100" height="10" loading="lazy" decoding="async">
                     <div class="project-info">
-                        <h3>Amazon & Audible Publishing Support</h3>
-                        <a href="BlogWorks.pdf" target="_blank" class="btn btn-secondary">View Work</a>
+                        <h3>Content & Blog Management</h3>
+                        <a href="BlogWorks.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Work</a>
                     </div>
                 </div>
-                
             </div>
+        </section>
 
         <section id="contact" class="container">
             <h2>Get In Touch</h2>
@@ -466,11 +447,10 @@
     document.addEventListener('DOMContentLoaded', () => {
 
         const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        const navItems = document.querySelector('.nav-items'); // Grab the container
+        const navItems = document.querySelector('.nav-items');
 
         hamburger.addEventListener('click', () => {
-            navItems.classList.toggle('active'); // Toggle on the container
+            navItems.classList.toggle('active');
         });
         
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -532,7 +512,7 @@
         const navLinkElements = document.querySelectorAll('.nav-link');
         const sectionElements = document.querySelectorAll('section[id]');
         window.addEventListener('scroll', () => {
-            let current = 'hero'; // Default to hero
+            let current = 'hero';
             sectionElements.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= sectionTop - 80) {
